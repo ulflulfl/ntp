@@ -47,7 +47,7 @@ MS Name/IP address         Stratum Poll Reach LastRx Last sample
 Learnings:
 
 * Stratum 15 is the highest possible, as 16 is invalid
-* In theory, the expected error (last column) should raise with each Stratum. In practice, the highest error as at Stratum 10 and is going down with higher Strata again
+* In theory, the expected error (last column) should raise with each Stratum. In practice, the highest error is at Stratum 10 and going down again with higher Strata
 
 ## During establishing
 
