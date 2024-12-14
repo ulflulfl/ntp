@@ -1,0 +1,157 @@
+version: "3"
+
+# create a chain of chrony NTP servers to see raising stratum numbers and their time (error) behavior
+# to watch the time chain establish use:
+#
+# watch docker exec ntp-client chronyc sources -v
+
+# The *docker-compose.yml* is losely based on:
+# - https://github.com/cturra/docker-ntp/blob/main/docker-compose.yml
+# - https://github.com/cturra/docker-ntp
+
+services:
+  ntp-server1:
+    container_name: ntp-server1
+    image: cturra/ntp:latest
+    environment:
+      # google servers as the basis
+      - NTP_SERVERS="time1.google.com,time2.google.com,time3.google.com,time4.google.com"
+      - LOG_LEVEL=0
+    restart: unless-stopped
+
+  ntp-server2:
+    container_name: ntp-server2
+    image: cturra/ntp:latest
+    environment:
+      - NTP_SERVERS=ntp-server1
+      - LOG_LEVEL=0
+    restart: unless-stopped
+
+  ntp-server3:
+    container_name: ntp-server3
+    image: cturra/ntp:latest
+    environment:
+      - NTP_SERVERS=ntp-server2
+      - LOG_LEVEL=0
+    restart: unless-stopped
+
+  ntp-server4:
+    container_name: ntp-server4
+    image: cturra/ntp:latest
+    environment:
+      - NTP_SERVERS=ntp-server3
+      - LOG_LEVEL=0
+    restart: unless-stopped
+
+  ntp-server5:
+    container_name: ntp-server5
+    image: cturra/ntp:latest
+    environment:
+      - NTP_SERVERS=ntp-server4
+      - LOG_LEVEL=0
+    restart: unless-stopped
+
+  ntp-server6:
+    container_name: ntp-server6
+    image: cturra/ntp:latest
+    environment:
+      - NTP_SERVERS=ntp-server5
+      - LOG_LEVEL=0
+    restart: unless-stopped
+
+  ntp-server7:
+    container_name: ntp-server7
+    image: cturra/ntp:latest
+    environment:
+      - NTP_SERVERS=ntp-server6
+      - LOG_LEVEL=0
+    restart: unless-stopped
+
+  ntp-server8:
+    container_name: ntp-server8
+    image: cturra/ntp:latest
+    environment:
+      - NTP_SERVERS=ntp-server7
+      - LOG_LEVEL=0
+    restart: unless-stopped
+
+  ntp-server9:
+    container_name: ntp-server9
+    image: cturra/ntp:latest
+    environment:
+      - NTP_SERVERS=ntp-server8
+      - LOG_LEVEL=0
+    restart: unless-stopped
+
+  ntp-server10:
+    container_name: ntp-server10
+    image: cturra/ntp:latest
+    environment:
+      - NTP_SERVERS=ntp-server9
+      - LOG_LEVEL=0
+    restart: unless-stopped
+
+  ntp-server11:
+    container_name: ntp-server11
+    image: cturra/ntp:latest
+    environment:
+      - NTP_SERVERS=ntp-server10
+      - LOG_LEVEL=0
+    restart: unless-stopped
+
+  ntp-server12:
+    container_name: ntp-server12
+    image: cturra/ntp:latest
+    environment:
+      - NTP_SERVERS=ntp-server11
+      - LOG_LEVEL=0
+    restart: unless-stopped
+
+  ntp-server13:
+    container_name: ntp-server13
+    image: cturra/ntp:latest
+    environment:
+      - NTP_SERVERS=ntp-server12
+      - LOG_LEVEL=0
+    restart: unless-stopped
+
+  ntp-server14:
+    container_name: ntp-server14
+    image: cturra/ntp:latest
+    environment:
+      - NTP_SERVERS=ntp-server13
+      - LOG_LEVEL=0
+    restart: unless-stopped
+
+  ntp-server15:
+    container_name: ntp-server15
+    image: cturra/ntp:latest
+    environment:
+      - NTP_SERVERS=ntp-server14
+      - LOG_LEVEL=0
+    restart: unless-stopped
+
+  ntp-server16:
+    container_name: ntp-server16
+    image: cturra/ntp:latest
+    environment:
+      - NTP_SERVERS=ntp-server15
+      - LOG_LEVEL=0
+    restart: unless-stopped
+
+  ntp-server17:
+    container_name: ntp-server17
+    image: cturra/ntp:latest
+    environment:
+      - NTP_SERVERS=ntp-server16
+      - LOG_LEVEL=0
+    restart: unless-stopped
+
+  ntp-client:
+    container_name: ntp-client
+    image: cturra/ntp:latest
+    environment:
+      - NTP_SERVERS=ntp-server1,ntp-server2,ntp-server3,ntp-server4,ntp-server5,ntp-server6,ntp-server7,ntp-server8,ntp-server9,ntp-server10,ntp-server11,ntp-server12,ntp-server13,ntp-server14,ntp-server15,ntp-server16,ntp-server17
+      - LOG_LEVEL=0
+    restart: unless-stopped
+
