@@ -48,15 +48,17 @@ GPS time will have an accurracy of 1-10 ns: https://web.archive.org/web/20121028
 
 ## NTP Stratum
 
-The stratum is the count of NTP server hops from a clock source like GPS or DCF77 to an NTP server or client. An NTP server directly connected to such a clock source has the stratum 1. Each NTP server hop increases the stratum by one.
+The stratum is the count of NTP server hops from a [clock source](clock-sources.md) like GPS or DCF77 to an NTP server or client. An NTP server directly connected to such a clock source has the stratum 1. Each NTP server hop increases the stratum by one.
 
-Typical internet NTP servers have a stratum of 1, 2 or 3. As an NTP client has a stratum increased by one, its stratum will be usually 2, 3 or 4.
+Typical internet NTP servers have a stratum of 1, 2 or 3. As an NTP client has a stratum increased by one (related to the NTP server it is connected to), its stratum will be usually 2, 3 or 4.
 
 Stratum 16 marks an unsynchronized NTP server and values higher than 16 aren't valid.
 
 ![stratum.drawio.svg](stratum.drawio.svg)
 
 Please be aware: In practice, the stratum isn't a good indicator for the expectable accuracy. For example: Here in germany, the stratum 3 servers from cloudflare usually have a much higher accuracy compared to the stratum 2 servers from aliexpress.
+
+---
 
 ## Accuracy Values
 
@@ -68,87 +70,6 @@ Measuring the accuracy of an NTP server can be done by comparing the time with a
 Unfortunately, a highly precise reference time is pretty expensive. For example, an "enterprise grade" NTP/PTP server like the GPS based *MICROCHIP SyncServer S600* delivers a typical (RMS) accuracy <15 ns at a price tag of 18k €.
 
 An alternative is to use a time reference with a good "Estimated Error" as displayed by chronyc, which is very often used in internet publications. Well crafted DIY NTP servers using GPS+PPS (see below) may provide accuracies of 50 us. If you're on a budget its the best you can do, as even medium priced equipment will often not even state the accuracy in the data sheet at all or only mentions it vaguely, like: "around 10 ms".
-
----
-
-## Clock Sources
-
-There are several possible clock sources (GPS, radio clock, ...) to get a - hopefully - accurate current time. Every stratum 1 NTP server uses such a (stratum 0) clock source.
-
-### Overview
-Here is an overview of the clock sources:
-
-| Source | Typical Accuracy Range | Remarks |
-| --- | --- | --- |
-| GPS | 1 - 50 ms |
-| GPS+PPS | 15 ns - 1 ms | PPS: Pulse per second signal
-| Radio clock | 5 - 25 ms | e.g. DCF77 |
-| Atomic clock | ? | Probably too expensive for common use |
-| Telephone modem | ? | Limited practical use today |
-
-Hint: Usually GPS (or better GPS+PPS) is used as the clock source for stratum 1 NTP servers today.
-
-### GPS
-
-GPS can provide a pretty accurate time signal.
-
-The serial data stream (RS232 or USB) provided by common GPS receivers includes the *GPS time* (https://en.wikipedia.org/wiki/Global_Positioning_System#Timekeeping). While that time is pretty accurate in general, the serial data transfer limits the accuracy to a typical 1 ms (or worse) due to latency, jitter and data processing time.
-
-Modern GPS receiver chipsets may receive signals not only from GPS (USA), but also from similar systems like: Galileo (EU), GLONASS (Russia), BeiDOU (China), ... However, "GPS antennas" may only support a specific frequency range which isn't suitable for all systems. In question consult the data sheets.
-
-Advantages:
-- best accuracy 1 ms (up to 50 ms depending on HW/SW used)
-- no internet connection needed
-- usable worldwide
-- medium priced (Aliexpress FC-NTP-Mini: <100 €, TimeMachines TM1000A: 350 €)
-
-Disadvantages:
-- clear sky view needed
-- indoor use only with external antenna
-
-### GPS+PPS
-In addition to the GPS serial data (as mentioned above) providing maybe 1 ms accuracy, specialized GPS hardware can provide a PPS signal (https://en.wikipedia.org/wiki/Pulse-per-second_signal) that provides nanosecond accuracy.
-
-The "trick" is to take the serial GPS data (even with a "poor" accuracy of maybe 50ms) for the coarse date&time and use a highly accurate "PPS one second pulse" with low latency/jitter HW to adjust the actual start of a second with high accuracy.
-
-GPS receiver module data sheets often states a PPS accuracy of 10-20 ns, the GPS-Time itself should have a typical accuracy of 1-10 ns: https://web.archive.org/web/20121028043917/http://tf.nist.gov/time/commonviewgps.htm. Equipment like the MICROCHIP SyncServer S600 mentioned above are probably using such a setup together with dedicated HW to provide accuracy of 15 ns. But even low/medium priced PC HW together with well crafted GPS DIY can provide NTP accuracy < 50us which is far better than using serial GPS data alone.
-
-Advantages:
-- typical accuracy maybe 50 us (range highly depends on the HW/SW used: 15 ns - 1 ms)
-- no internet connection needed
-- usable worldwide
-- DIY medium priced (GPS receiver 10-100 €, depending on the HW used)
-
-Disadvantages:
-- clear sky view needed
-- indoor use only with external antenna
-- ready made devices are high priced (MICROCHIP SyncServer S600: 18k €) - are there cheaper alternatives?
-
-### Radio clock (DCF77)
-There are many radio clock sources available around the world (see: https://en.wikipedia.org/wiki/Radio_clock and RFC5095 "Figure 12: Reference Identifiers"). Probably the best known are:
-
-- DCF77, 77,5 kHz, Frankfurt (Mainflingen), Germany
-- JJY, 40/60kHz, Japan
-- WWVB, 60kHz, USA
-
-Advantages:
-- no internet connection needed
-- indoor use possible (may or may not work)
-- cheap DIY (Antenna < 10 € + "some spare parts")
-
-Disadvantages:
-- typical accuracy 5-25 ms (DCF77)
-- location range limited (DCF77: 2000km around Frankfurt)
-- weak reception possible (reinforced concrete, "big motor" interferences, ...)
-- ready made devices 1000 € (DCF77: Gude 3011)
-
-### Atomic Clock
-
-To run an own atomic clock is at least costly only for "everyday use". Institutions that run their own atomic clock will probably now much better than I do about strengths and weaknesses ;-)
-
-### Telephone modem
-
-Telephone modems seems to have a relatively poor accuracy and used only on older existing setups.
 
 ---
 
@@ -166,7 +87,7 @@ With using NTP, the main (accuracy) question is wether to depend on internet NTP
 ### Internet NTP Server
 There are many NTP servers available on the internet. The accuracy highly depends on the servers used. Not all servers support NTS (network time security).
 
-Some examples with values I've seen at home **in germany** ("Expected Error" from chronyc) over a few days:
+Some examples with values I've seen at home **in germany** over a few days:
 
 | Source | Stratum | Typical Error | Error Range | Server | Supports NTS? | Remark |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -174,7 +95,7 @@ Some examples with values I've seen at home **in germany** ("Expected Error" fro
 | Cloudflare | 3 | | | time.cloudflare.com | yes |
 | Alibaba | 2 | | | ntp1.aliyun.com, ntp2.aliyun.com, ntp3.aliyun.com, ntp4.aliyun.com | ? |
 | de.pool.ntp.org | | | | 0.de.pool.ntp.org, 1.de.pool.ntp.org, 2.de.pool.ntp.org, 3.de.pool.ntp.org | ? | actual server and accuracy varies |
-| de.pool.ntp.arcor-ip.net | | | | de.pool.ntp.arcor-ip.net | ? | NTP server from my internet provider |
+| Arcor (Vodafone) | | | | de.pool.ntp.arcor-ip.net | ? | NTP server from my internet provider |
 
 Values are taken from chronyc "Estimated Error" output.
 
@@ -195,11 +116,11 @@ Disadvantages
 
 ### Local NTP Server
 
-Placing an NTP server in the local network provides more control and usually a higher accuracy.
+Placing an NTP server (that uses it's own local [clock source](clock_sources.md), typically GPS)  in the local network provides more control and usually a higher accuracy.
 
 Advantages:
 - usable worldwide
-- accuracy down to microseconds typical "Estimated Error"
+- accuracy down to microseconds typical "Estimated Error" possible
 - accuracy only depends on "own equipment"
 - no internet connection needed
 - low security risk (compared to internet servers)
@@ -210,6 +131,8 @@ Neutral:
 Disadvantages
 - additional cost
 
+See: [clock sources](clock_sources.md) for pros and cons of the possible sources.
+
 ### Network Influence
 
 How much the network influences the time accuracy depends on many factors:
@@ -219,7 +142,7 @@ How much the network influences the time accuracy depends on many factors:
 * SW vs. HW firewalls and routers
 * ...
 
-The highest influence I've seen on my network is using Wi-Fi instead of an Ethernet cable which increases the "Estimated Error" of chronyc by 1-3 ms.
+The highest influence I've seen on my network is using Wi-Fi instead of an Ethernet cable which increases the "Estimated Error" of chronyc by 2-4 ms.
 
 ## Example NTP Server Equipment
 
