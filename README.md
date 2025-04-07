@@ -1,4 +1,7 @@
 # ntp
+
+![md-linkcheck](https://github.com/ulflulfl/ntp/actions/workflows/md-linkcheck.yaml/badge.svg)
+
 Infos and experiments around the **N**etwork **T**ime **P**rotocol.
 
 * [accuracy](accuracy/Readme.md) infos and typical data about NTP time accuracy
