@@ -116,7 +116,7 @@ Disadvantages
 
 ### Local NTP Server
 
-Placing an NTP server (that uses it's own local [clock source](clock_sources.md), typically GPS)  in the local network provides more control and usually a higher accuracy.
+Placing an NTP server (that uses it's own local [clock source](./clock-sources.md), typically GPS)  in the local network provides more control and usually a higher accuracy.
 
 Advantages:
 - usable worldwide
@@ -131,7 +131,7 @@ Neutral:
 Disadvantages
 - additional cost
 
-See: [clock sources](clock_sources.md) for pros and cons of the possible sources.
+See: [clock sources](./clock-sources.md) for pros and cons of the possible sources.
 
 ### Network Influence
 

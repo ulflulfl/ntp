@@ -58,7 +58,7 @@ From left to right:
   - **?** unusable: e.g. if server is (temporarily) unreachable or before initial 3 packets were received
   - hint: with the typical poll rate of 6, a configured NTP source will initially stay at least 3*2^6=192s (~3 mins.) in the state ? before becoming "active". Use iburst for initial speed up.
 - **Name/IP address** as you may guess ...
-- **Stratum** how many NTP server "hops" this server is away from a reference time source (GPS, DCF77), will be 0 if its actually such a time source or initially for a never connected NTP server. Raised by 1 for each NTP server away from the time source. (TODO: For details on stratum/strata, see [ntp_stratum.md](ntp_stratum.md))
+- **Stratum** how many NTP server "hops" this server is away from a reference time source (GPS, DCF77), will be 0 if its actually such a time source or initially for a never connected NTP server. Raised by 1 for each NTP server away from the time source. For details on stratum/strata, see: [NTP Stratum](../accuracy/Readme.md#ntp-stratum).
 - **Poll** how often the source is requested, in 2^x seconds. The minimum for NTP servers is typically 6 -> 2^6=64s. Will raise automatically if a server is not available.
 - **Reach** Reachability of a server. This is an octal (base 8) number: 0 is unreachable, 377 is best. Each poll interval, this number is shifted one bit to the left and the least significant bit is filled with 1 if the server could be reached and 0 if not. To "decode" it, convert the number to binary and look at the bits.
 - **LastRx** time since last received packet from NTP server in seconds. If a packet was received from that server, it goes back to 0.
