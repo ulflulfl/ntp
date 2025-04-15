@@ -44,7 +44,7 @@ The source of the official time are extremely accurate atomic clocks:
 
 ![official_time.drawio.svg](official_time.drawio.svg)
 
-GPS time will have an accurracy of 1-10 ns: https://web.archive.org/web/20121028043917/http://tf.nist.gov/time/commonviewgps.htm
+GPS time will have an accuracy of 1-10 ns: https://web.archive.org/web/20121028043917/http://tf.nist.gov/time/commonviewgps.htm
 
 ## NTP Stratum
 
@@ -154,7 +154,7 @@ Some example NTP server devices for price/accuracy orientation (2024.12):
 | (TXT) MA-802 | GPS | <1 ms | Aliexpress 750 € |
 | TimeMachines TM1000A | GPS | +-1 ms | 350 € |
 | Meinberg LANTIME M300 | GPS | ~10 ms | 5000 € |
-| Gude 3011 | DCF77 | ? ms | reichelt 1000 € |
+| Gude 3011 | DCF77 | ? ms | Reichelt 1000 € |
 | FC-NTP-MINI | GPS | +- 1 ms | Aliexpress ~70 € | Reviews report problems with ntpd clients (e.g. Unraid, OPNsense, PfSense): https://www.elkoba.com/magazin/service-info-zum-ntp-server-gps-fc-ntp-mini/ |
 | ALLNET ALLNTP101 | GPS | ? ms | reichelt 200 € | Seems to be the same device as FC-NTP-MINI |
 

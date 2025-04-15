@@ -14,7 +14,7 @@ Chrony "selected features" (2024.12):
 
 Wikipedia: https://en.wikipedia.org/wiki/Chrony
 
-Subpages:
+Sub-pages:
 
 * [chronyc.md](chronyc.md) chrony client command line program, especially "chronyc sources" explained
 * [chrony-chain.md](chrony-chain.md) experiment: create a chain of chrony containers and look at the output

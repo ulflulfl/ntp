@@ -5,7 +5,7 @@ version: "3"
 #
 # watch docker exec ntp-client chronyc sources -v
 
-# The *docker-compose.yml* is losely based on:
+# The *docker-compose.yml* is loosely based on:
 # - https://github.com/cturra/docker-ntp/blob/main/docker-compose.yml
 # - https://github.com/cturra/docker-ntp
 
