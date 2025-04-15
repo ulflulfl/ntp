@@ -1,6 +1,6 @@
 # ntp
 
-![md-linkcheck](https://github.com/ulflulfl/ntp/actions/workflows/md-linkcheck.yaml/badge.svg)
+![md-linkcheck](https://github.com/ulflulfl/ntp/actions/workflows/md-linkcheck.yaml/badge.svg) ![Spell check](https://github.com/ulflulfl/ntp/actions/workflows/spellcheck.yaml/badge.svg)
 
 Infos and experiments around the **N**etwork **T**ime **P**rotocol.
 
