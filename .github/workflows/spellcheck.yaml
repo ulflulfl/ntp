@@ -3,6 +3,7 @@ name: 'Spell check'
 on: # rebuild any PRs and main branch changes
   pull_request:
   push:
+  workflow_dispatch: # This enables the force-run button!
 
 jobs:
   spellcheck: # run the action

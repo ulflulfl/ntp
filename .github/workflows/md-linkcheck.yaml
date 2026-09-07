@@ -2,7 +2,9 @@ name: Markdown linkcheck
 # https://github.com/marketplace/actions/markup-link-checker-mlc
 # https://github.com/becheran/mlc
 
-on: push
+on:
+  push:
+  workflow_dispatch: # This enables the force-run button!
 
 jobs:
   markdown-link-check:
