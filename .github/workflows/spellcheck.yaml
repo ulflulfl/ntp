@@ -1,5 +1,6 @@
 # https://github.com/streetsidesoftware/cspell-action
 name: 'Spell check'
+
 on: # rebuild any PRs and main branch changes
   pull_request:
   push:
